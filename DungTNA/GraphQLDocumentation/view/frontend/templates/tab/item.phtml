@@ -1,0 +1,69 @@
+<?php
+/** @var $this \DungTNA\GraphQLDocumentation\Block\Tab\Item */
+
+use DungTNA\GraphQLDocumentation\Block\Tab\ResponseAndCode;
+
+$name = $this->getName();
+$data = $this->getData();
+$type = $this->getType();
+$block = $this->getBlock();
+$id = $type . '-' . $block->escapeHtmlAttr($name);
+?>
+
+<div class="schema-item" data-name="<?= $block->escapeHtmlAttr($name) ?>">
+    <div class="schema-item-toggle" onclick="GraphQLDocs.toggleItem('<?= $id ?>')">
+        <div class="toggle-header-content">
+            <strong><?= $block->escapeHtml($name) ?></strong>
+            <span class="schema-type"><?= $block->escapeHtml($data['type'] ?? '') ?></span>
+            <?php if (!empty($data['is_custom_resolver'])): ?>
+                <span class="custom-resolver-badge">Custom</span>
+            <?php endif; ?>
+        </div>
+        <span class="toggle-icon collapsed">👇</span>
+    </div>
+
+    <div class="schema-item-content collapsed" id="<?= $id ?>">
+        <div class="schema-description"><?= $block->escapeHtml($data['description'] ?? '') ?></div>
+
+        <?php if (!empty($data['is_deprecated'])): ?>
+            <div class="deprecated-warning">
+                <strong>Deprecated:</strong> <?= $block->escapeHtml($data['deprecation_reason'] ?? '') ?>
+            </div>
+        <?php endif; ?>
+
+        <!-- Arguments -->
+        <?php if (!empty($data['args'])): ?>
+            <div class="toggle-header" onclick="GraphQLDocs.toggleSection('args-<?= $block->escapeHtmlAttr($name) ?>')">
+                <h4><span class="toggle-icon collapsed">👇</span> Arguments (<?= count($data['args']) ?>)</h4>
+            </div>
+            <div class="toggle-content collapsed" id="args-<?= $block->escapeHtmlAttr($name) ?>">
+                <div class="schema-arguments">
+                    <?php foreach ($data['args'] as $argName => $arg): ?>
+                        <div class="argument">
+                            <div class="argument-header">
+                                <strong class="argument-name"><?= $block->escapeHtml($argName) ?></strong>
+                                <code class="argument-type"><?= $block->escapeHtml($arg['type'] ?? '') ?></code>
+                                <?php if (!empty($arg['is_required'])): ?>
+                                    <span class="required-badge">required</span>
+                                <?php endif; ?>
+                            </div>
+                            <div class="argument-description"><?= $block->escapeHtml($arg['description'] ?? '') ?></div>
+                            <?php if (isset($arg['default_value'])): ?>
+                                <div class="argument-default">Default:
+                                    <code><?= $block->escapeHtml($arg['default_value']) ?></code></div>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <!-- Response + Code Examples -->
+        <?= $this->getLayout()->createBlock(ResponseAndCode::class)
+                ->setName($name)
+                ->setData($data)
+                ->setType($type)
+                ->setBlock($block)
+                ->toHtml() ?>
+    </div>
+</div>

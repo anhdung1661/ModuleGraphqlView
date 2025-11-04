@@ -1,0 +1,31 @@
+<?php
+/** @var $this Queries */
+
+use DungTNA\GraphQLDocumentation\Block\Tab\Queries;
+
+$items = $this->getItems();
+$block = $this->getBlockHelper();
+$type = 'query';
+$sectionId = 'queries-section';
+?>
+
+<?php if (empty($items)): ?>
+    <div class="no-data">No queries found in the GraphQL schema.</div>
+<?php else: ?>
+    <div class="schema-section">
+        <div class="schema-section-header" onclick="GraphQLDocs.toggleSection('<?= $sectionId ?>')">
+            <h3><span class="toggle-icon collapsed">👇</span> All Queries</h3>
+            <span><?= count($items) ?> queries</span>
+        </div>
+        <div class="schema-section-content collapsed" id="<?= $sectionId ?>">
+            <?php foreach ($items as $name => $data): ?>
+                <?= $this->getLayout()->createBlock(\DungTNA\GraphQLDocumentation\Block\Tab\Item::class)
+                        ->setName($name)
+                        ->setData($data)
+                        ->setType($type)
+                        ->setBlock($block)
+                        ->toHtml() ?>
+            <?php endforeach; ?>
+        </div>
+    </div>
+<?php endif; ?>

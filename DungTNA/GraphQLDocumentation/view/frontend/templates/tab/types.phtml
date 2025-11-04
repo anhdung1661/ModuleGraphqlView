@@ -1,0 +1,72 @@
+<?php
+/** @var $this Types */
+
+use DungTNA\GraphQLDocumentation\Block\Tab\Types;
+
+$items = $this->getItems();
+$block = $this->getBlockHelper();
+$sectionId = 'types-section';
+?>
+
+<?php if (empty($items)): ?>
+    <div class="no-data">No types found in the GraphQL schema.</div>
+<?php else: ?>
+    <div class="schema-section">
+        <div class="schema-section-header" onclick="GraphQLDocs.toggleSection('<?= $sectionId ?>')">
+            <h3><span class="toggle-icon collapsed">👇</span> All Types</h3>
+            <span><?= count($items) ?> types</span>
+        </div>
+        <div class="schema-section-content collapsed" id="<?= $sectionId ?>">
+            <?php foreach ($items as $name => $fields): ?>
+                <div class="schema-item" data-name="<?= $block->escapeHtmlAttr($name) ?>">
+                    <div class="schema-item-toggle"
+                         onclick="GraphQLDocs.toggleItem('type-<?= $block->escapeHtmlAttr($name) ?>')">
+                        <div class="toggle-header-content">
+                            <strong><?= $block->escapeHtml($name) ?></strong>
+                            <span class="type-badge">TYPE</span>
+                        </div>
+                        <span>👇</span>
+                    </div>
+
+                    <div class="schema-item-content collapsed" id="type-<?= $block->escapeHtmlAttr($name) ?>">
+                        <div class="type-fields">
+                            <h4>Fields:</h4>
+                            <?php foreach ($fields as $fieldName => $field): ?>
+                                <div class="field">
+                                    <div class="field-header">
+                                        <strong class="field-name"><?= $block->escapeHtml($fieldName) ?></strong>
+                                        <code class="field-type"><?= $block->escapeHtml($field['type'] ?? '') ?></code>
+                                    </div>
+                                    <div class="field-description"><?= $block->escapeHtml($field['description'] ?? '') ?></div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+
+                        <div class="toggle-header"
+                             onclick="GraphQLDocs.toggleSection('response-<?= $block->escapeHtmlAttr($name) ?>')">
+                            <h4><span class="toggle-icon collapsed">👇</span> Response Sample</h4>
+                        </div>
+                        <div class="toggle-content collapsed" id="response-<?= $block->escapeHtmlAttr($name) ?>">
+                            <div class="response-sample">
+                                <div class="code-header">
+                                    <span>JSON Response Structure</span>
+                                    <button class="copy-btn"
+                                            data-clipboard-target="#response-json-<?= $block->escapeHtmlAttr($name) ?>">
+                                        Copy
+                                    </button>
+                                </div>
+                                <pre id="response-json-<?= $block->escapeHtmlAttr($name) ?>"><code class="json">
+                                    <?= $block->escapeHtml($block->generateSampleResponse($name, 'types', $fields)) ?>
+                                </code></pre>
+                                <div class="response-fields">
+                                    <h5>Response Fields:</h5>
+                                    <?= $block->getResponseFieldsDescription($name, 'query', $fields) ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+<?php endif; ?>

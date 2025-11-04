@@ -1,0 +1,793 @@
+/* ========================================
+   MAGENTO 2 GRAPHQL DOCUMENTATION – FULL CSS
+   Fullscreen, centered, big font, pro UI
+   Compatible with any theme (Luma, custom, etc.)
+   ======================================== */
+
+/* ============ 1. GLOBAL RESET & FULLSCREEN ============ */
+html,
+body,
+.page-wrapper,
+.page-main,
+.page-header,
+.page-footer,
+.breadcrumbs,
+.columns,
+.main.content {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f5f7fa;
+    color: #2c3e50;
+    line-height: 1.7;
+    font-size: 18px;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ============ 2. ROOT VARIABLES ============ */
+:root {
+    --primary: #1976d2;
+    --primary-light: #4791ff;
+    --primary-dark: #0d47a1;
+    --success: #4caf50;
+    --warning: #ff9800;
+    --danger: #f44336;
+    --gray-50: #fafafa;
+    --gray-100: #f8f9fa;
+    --gray-200: #e9ecef;
+    --gray-300: #dee2e6;
+    --gray-400: #ced4da;
+    --gray-500: #adb5bd;
+    --gray-600: #6c757d;
+    --gray-700: #495057;
+    --gray-800: #343a40;
+    --gray-900: #212529;
+    --text: #2c3e50;
+    --text-light: #5a6c7d;
+    --bg: #ffffff;
+    --border: #e0e0e0;
+    --radius: 12px;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    --font-code: 'Fira Code', 'JetBrains Mono', 'Courier New', monospace;
+}
+
+/* ============ 3. MAIN CONTAINER – FULLSCREEN & CENTERED ============ */
+.graphql-documentation {
+    flex: 1;
+    width: 100vw;
+    min-height: 100vh;
+    margin: 0 !important;
+    padding: 40px 48px;
+    background: var(--bg);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+/* ============ 4. HEADER ============ */
+.docs-header {
+    text-align: center;
+    margin-bottom: 48px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+    width: 100%;
+    max-width: 1200px;
+}
+
+.docs-header h1 {
+    font-size: 3.2rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin: 0 0 12px 0;
+    letter-spacing: -0.8px;
+    line-height: 1.1;
+}
+
+.docs-subtitle {
+    font-size: 1.35rem;
+    color: var(--text-light);
+    font-weight: 500;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* ============ 5. STATS BAR ============ */
+.stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 36px;
+    margin: 48px 0;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 24px 32px;
+    background: var(--gray-100);
+    border-radius: var(--radius);
+    min-width: 140px;
+    transition: var(--transition);
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.stat-item:hover {
+    background: var(--primary-light);
+    color: white;
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(25, 118, 210, 0.22);
+}
+
+.stat-number {
+    display: block;
+    font-size: 2.6rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 6px;
+}
+
+.stat-label {
+    font-size: 1.05rem;
+    color: inherit;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* ============ 6. SEARCH ============ */
+.search-section {
+    margin: 48px 0;
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+}
+
+.search-input {
+    width: 100%;
+    padding: 20px 28px;
+    font-size: 1.15rem;
+    border: 2px solid var(--border);
+    border-radius: 50px;
+    outline: none;
+    transition: var(--transition);
+    background: white;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    font-weight: 500;
+}
+
+.search-input::placeholder {
+    color: var(--gray-500);
+    font-style: italic;
+}
+
+.search-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 5px rgba(25, 118, 210, 0.18);
+    transform: scale(1.01);
+}
+
+/* ============ 7. TABS ============ */
+.tabs-container {
+    flex: 1;
+    width: 100%;
+    max-width: 1400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.tabs {
+    display: flex;
+    border-bottom: 2px solid var(--border);
+    overflow-x: auto;
+    white-space: nowrap;
+    margin-bottom: 28px;
+    gap: 8px;
+    padding: 0 4px 4px;
+    scrollbar-width: thin;
+    width: 100%;
+}
+
+.tab-button {
+    padding: 18px 32px;
+    background: transparent;
+    border: none;
+    font-weight: 600;
+    color: var(--text-light);
+    cursor: pointer;
+    border-radius: 14px 14px 0 0;
+    transition: var(--transition);
+    font-size: 1.1rem;
+    min-width: fit-content;
+    white-space: nowrap;
+}
+
+.tab-button:hover {
+    background: var(--gray-100);
+    color: var(--text);
+}
+
+.tab-button.active {
+    background: var(--primary);
+    color: white;
+    font-weight: 700;
+    box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.12);
+}
+
+.tab-content {
+    display: none;
+    animation: fadeIn 0.5s ease;
+    flex: 1;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============ 8. SCHEMA SECTION ============ */
+.schema-section {
+    margin-bottom: 36px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: white;
+    box-shadow: var(--shadow);
+    width: 100%;
+}
+
+.schema-section-header {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    padding: 24px 32px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    transition: var(--transition);
+    user-select: none;
+    font-size: 1.25rem;
+}
+
+.schema-section-header:hover {
+    background: var(--gray-200);
+}
+
+.schema-section-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 1.3rem;
+    margin: 0;
+}
+
+.toggle-icon {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+    color: var(--gray-600);
+}
+
+.toggle-icon.collapsed {
+    transform: rotate(-90deg);
+}
+
+.schema-section-content {
+    padding: 0;
+    max-height: 30000px;
+    transition: all 0.6s ease;
+    overflow: hidden;
+}
+
+.schema-section-content.collapsed {
+    max-height: 0;
+    padding: 0;
+}
+
+/* ============ 9. SCHEMA ITEM ============ */
+.schema-item {
+    border-bottom: 1px solid var(--border);
+}
+
+.schema-item:last-child {
+    border-bottom: none;
+}
+
+.schema-item-toggle {
+    padding: 26px 32px;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition);
+    user-select: none;
+}
+
+.schema-item-toggle:hover {
+    background: #f8fbff;
+}
+
+.toggle-header-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+}
+
+.schema-item-toggle strong {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.schema-type {
+    font-family: var(--font-code);
+    font-size: 1rem;
+    color: var(--primary);
+    background: rgba(25, 118, 210, 0.14);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    border: 1px solid rgba(25, 118, 210, 0.25);
+}
+
+.custom-resolver-badge {
+    background: var(--success);
+    color: white;
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+.schema-item-content {
+    padding: 0 32px 28px;
+    background: #fafcff;
+    border-top: 1px dashed var(--border);
+    max-height: 30000px;
+    overflow: hidden;
+    transition: all 0.6s ease;
+}
+
+.schema-item-content.collapsed {
+    max-height: 0;
+    padding: 0 32px;
+}
+
+/* ============ 10. CONTENT ============ */
+.schema-description {
+    padding: 22px 0;
+    color: var(--text-light);
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.deprecated-warning {
+    background: #fff8e1;
+    color: #b71c1c;
+    padding: 16px 20px;
+    border-left: 6px solid var(--warning);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin: 18px 0;
+    font-size: 1.05rem;
+    font-weight: 500;
+}
+
+.toggle-header {
+    padding: 20px 0;
+    border-top: 1px dashed var(--border);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    color: var(--gray-700);
+    font-size: 1.15rem;
+}
+
+.toggle-header h4 {
+    margin: 0;
+    font-size: 1.15rem;
+}
+
+.toggle-content {
+    padding-bottom: 24px;
+    max-height: 30000px;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+.toggle-content.collapsed {
+    max-height: 0;
+    padding-bottom: 0;
+}
+
+/* ============ 11. CODE BLOCKS ============ */
+.code-header {
+    background: var(--gray-800);
+    color: white;
+    padding: 14px 22px;
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copy-btn {
+    background: rgba(255, 255, 255, 0.25);
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.copy-btn:hover {
+    background: rgba(255, 255, 255, 0.35);
+}
+
+pre {
+    margin: 0;
+    background: #1e1e1e !important;
+    padding: 22px;
+    border-radius: 0 0 var(--radius) var(--radius);
+    font-size: 1rem;
+    line-height: 1.7;
+    overflow-x: auto;
+}
+
+code {
+    font-family: var(--font-code);
+    font-size: 1rem;
+    color: #d4d4d4;
+}
+
+/* ============ 12. BADGES ============ */
+.required-badge,
+.deprecated-badge {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-weight: 700;
+    margin-left: 8px;
+}
+
+.required-badge {
+    background: #d32f2f;
+    color: white;
+}
+
+.deprecated-badge {
+    background: #ff8f00;
+    color: white;
+}
+
+/* ============ 13. ARGUMENTS & FIELDS ============ */
+.argument,
+.field,
+.input-field,
+.enum-value {
+    padding: 16px;
+    border-bottom: 1px dashed var(--border);
+    background: white;
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+}
+
+.argument-header,
+.field-header,
+.value-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+
+.argument-name,
+.field-name,
+.value-name {
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+.argument-type,
+.field-type {
+    font-family: var(--font-code);
+    font-size: 0.95rem;
+    background: var(--gray-100);
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+.argument-type.input-type {
+    background: rgba(76, 175, 80, 0.12);
+    color: var(--success);
+    border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+/* ============ 14. NO DATA ============ */
+.no-data {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-light);
+    font-style: italic;
+    font-size: 1.2rem;
+}
+
+/* ============ 15. ERROR ============ */
+.message.error {
+    background: #ffebee;
+    color: #c62828;
+    padding: 20px;
+    border-radius: var(--radius);
+    border-left: 5px solid var(--danger);
+    margin: 24px 0;
+    font-size: 1.05rem;
+}
+
+.error-help code {
+    background: #ffcdd2;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
+/* ============ 16. RESPONSIVE ============ */
+@media (max-width: 1200px) {
+    .graphql-documentation {
+        padding: 32px;
+    }
+
+    .docs-header h1 {
+        font-size: 2.8rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .graphql-documentation {
+        padding: 28px;
+    }
+
+    .docs-header h1 {
+        font-size: 2.4rem;
+    }
+
+    .stat-item {
+        padding: 20px 24px;
+        min-width: 120px;
+    }
+
+    .stat-number {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .graphql-documentation {
+        padding: 20px;
+    }
+
+    .docs-header h1 {
+        font-size: 2rem;
+    }
+
+    .stats-bar {
+        gap: 20px;
+    }
+
+    .tab-button {
+        padding: 14px 20px;
+        font-size: 1rem;
+    }
+
+    .schema-item-toggle,
+    .schema-section-header {
+        padding: 20px 24px;
+    }
+
+    .schema-item-toggle strong {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .graphql-documentation {
+        padding: 16px;
+    }
+
+    .docs-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .search-input {
+        padding: 16px 20px;
+        font-size: 1rem;
+    }
+
+    .stat-item {
+        min-width: 100px;
+        padding: 16px 20px;
+    }
+
+    .stat-number {
+        font-size: 1.8rem;
+    }
+
+    .code-tabs {
+        flex-direction: column;
+    }
+
+    .code-tab-button {
+        text-align: center;
+    }
+}
+
+/* ============ CODE BLOCK – CHỮ RÕ, KHÔNG ẨN, COPY ĐẸP ============ */
+.code-content {
+    display: none;
+    background: #1e1e1e;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.code-content.active {
+    display: block;
+}
+
+.code-header {
+    background: #2d2d2d;
+    color: #e0e0e0;
+    padding: 14px 20px;
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #444;
+}
+
+.copy-btn {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.copy-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.05);
+}
+
+pre {
+    margin: 0 !important;
+    padding: 24px !important;
+    background: #1e1e1e !important;
+    color: #d4d4d4 !important;
+    font-size: 1rem !important;
+    line-height: 1.7 !important;
+    overflow-x: auto !important;
+    white-space: pre !important;
+    word-wrap: normal !important;
+    border-radius: 0 0 var(--radius) var(--radius) !important;
+}
+
+code {
+    font-size: 1rem !important;
+    color: greenyellow !important;
+    background: transparent !important;
+}
+
+/* ============ CODE TABS – NẰM NGANG, ĐẸP, RÕ RÀNG ============ */
+.code-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+}
+
+.code-tab-button {
+    padding: 10px 18px;
+    background: var(--gray-100);
+    border: none;
+    border-radius: 10px 10px 0 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+    min-width: fit-content;
+    color: var(--text);
+}
+
+.code-tab-button:hover {
+    background: var(--gray-200);
+}
+
+.code-tab-button.active {
+    background: var(--primary);
+    color: white;
+    font-weight: 700;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.loading-spinner {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-size: 16px;
+}
+
+.loading-spinner:before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.error {
+    color: #d63031;
+    text-align: center;
+    padding: 20px;
+    background: #ffeaa7;
+    border-radius: 4px;
+    margin: 10px 0;
+}

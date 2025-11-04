@@ -1,0 +1,109 @@
+<?php
+/** @var $this ResponseAndCode */
+
+use DungTNA\GraphQLDocumentation\Block\Tab\ResponseAndCode;
+
+$name = $this->getName();
+$data = $this->getData();
+$type = $this->getType();
+$block = $this->getBlock();
+?>
+
+<!-- Response Sample -->
+<div class="toggle-header" onclick="GraphQLDocs.toggleSection('response-<?= $block->escapeHtmlAttr($name) ?>')">
+    <h4><span class="toggle-icon collapsed">👇</span> Response Sample</h4>
+</div>
+<div class="toggle-content collapsed" id="response-<?= $block->escapeHtmlAttr($name) ?>">
+    <div class="response-sample">
+        <div class="code-header">
+            <span>JSON Response Structure</span>
+            <button class="copy-btn" data-clipboard-target="#response-json-<?= $block->escapeHtmlAttr($name) ?>">Copy
+            </button>
+        </div>
+        <pre id="response-json-<?= $block->escapeHtmlAttr($name) ?>"><code class="json">
+            <?= $block->escapeHtml($block->generateSampleResponse($name, $type, $data)) ?>
+        </code></pre>
+        <div class="response-fields">
+            <h5>Response Fields:</h5>
+            <?= $block->getResponseFieldsDescription($name, $type, $data) ?>
+        </div>
+    </div>
+</div>
+
+<!-- Code Examples -->
+<div class="code-examples-toggle">
+    <div class="code-examples-header" onclick="GraphQLDocs.toggleSection('code-<?= $block->escapeHtmlAttr($name) ?>')">
+        <h4><span class="toggle-icon collapsed">👇</span> Code Examples</h4>
+    </div>
+    <div class="code-examples-content collapsed" id="code-<?= $block->escapeHtmlAttr($name) ?>">
+        <div class="code-tabs">
+            <button class="code-tab-button active" data-tab="curl-<?= $block->escapeHtmlAttr($name) ?>">cURL</button>
+            <button class="code-tab-button" data-tab="php-<?= $block->escapeHtmlAttr($name) ?>">PHP</button>
+            <button class="code-tab-button" data-tab="js-<?= $block->escapeHtmlAttr($name) ?>">JavaScript</button>
+            <button class="code-tab-button" data-tab="graphql-<?= $block->escapeHtmlAttr($name) ?>">GraphQL</button>
+            <?php if (!empty($data['args'])): ?>
+                <button class="code-tab-button" data-tab="variables-<?= $block->escapeHtmlAttr($name) ?>">Variables
+                </button>
+            <?php endif; ?>
+        </div>
+
+        <!-- cURL -->
+        <div class="code-content active" id="curl-<?= $block->escapeHtmlAttr($name) ?>">
+            <div class="code-header"><span>cURL Command</span>
+                <button class="copy-btn" data-clipboard-target="#curl-code-<?= $block->escapeHtmlAttr($name) ?>">Copy
+                </button>
+            </div>
+            <pre id="curl-code-<?= $block->escapeHtmlAttr($name) ?>"><code class="bash">
+                <?= $block->escapeHtml($block->generateCurlCommand($name, $type, $data)) ?>
+            </code></pre>
+        </div>
+
+        <!-- PHP -->
+        <div class="code-content" id="php-<?= $block->escapeHtmlAttr($name) ?>">
+            <div class="code-header"><span>PHP Code</span>
+                <button class="copy-btn" data-clipboard-target="#php-code-<?= $block->escapeHtmlAttr($name) ?>">Copy
+                </button>
+            </div>
+            <pre id="php-code-<?= $block->escapeHtmlAttr($name) ?>"><code class="php">
+                <?= $block->escapeHtml($block->generatePhpCode($name, $type, $data['args'] ?? [])) ?>
+            </code></pre>
+        </div>
+
+        <!-- JavaScript -->
+        <div class="code-content" id="js-<?= $block->escapeHtmlAttr($name) ?>">
+            <div class="code-header"><span>JavaScript</span>
+                <button class="copy-btn" data-clipboard-target="#js-code-<?= $block->escapeHtmlAttr($name) ?>">Copy
+                </button>
+            </div>
+            <pre id="js-code-<?= $block->escapeHtmlAttr($name) ?>"><code class="javascript">
+                <?= $block->escapeHtml($block->generateJavascriptCode($name, $type, $data['args'] ?? [])) ?>
+            </code></pre>
+        </div>
+
+        <!-- GraphQL -->
+        <div class="code-content" id="graphql-<?= $block->escapeHtmlAttr($name) ?>">
+            <div class="code-header"><span>GraphQL Query</span>
+                <button class="copy-btn" data-clipboard-target="#graphql-code-<?= $block->escapeHtmlAttr($name) ?>">
+                    Copy
+                </button>
+            </div>
+            <pre id="graphql-code-<?= $block->escapeHtmlAttr($name) ?>"><code class="graphql">
+                <?= $block->escapeHtml($block->generateSampleGraphQLQuery($name, $type, $data['args'] ?? [])) ?>
+            </code></pre>
+        </div>
+
+        <!-- Variables -->
+        <?php if (!empty($data['args'])): ?>
+            <div class="code-content" id="variables-<?= $block->escapeHtmlAttr($name) ?>">
+                <div class="code-header"><span>Variables JSON</span>
+                    <button class="copy-btn"
+                            data-clipboard-target="#variables-code-<?= $block->escapeHtmlAttr($name) ?>">Copy
+                    </button>
+                </div>
+                <pre id="variables-code-<?= $block->escapeHtmlAttr($name) ?>"><code class="json">
+                    <?= $block->escapeHtml($block->generateVariablesExample($name, $type, $data['args'])) ?>
+                </code></pre>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>

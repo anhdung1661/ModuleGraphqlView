@@ -1,0 +1,70 @@
+<?php
+/** @var $this InputTypes */
+
+use DungTNA\GraphQLDocumentation\Block\Tab\InputTypes;
+
+$items = $this->getItems();
+$block = $this->getBlockHelper();
+$sectionId = 'input-types-section';
+?>
+
+<?php if (empty($items)): ?>
+    <div class="no-data">No input types found.</div>
+<?php else: ?>
+    <div class="schema-section">
+        <div class="schema-section-header" onclick="GraphQLDocs.toggleSection('<?= $sectionId ?>')">
+            <h3><span class="toggle-icon collapsed">👇</span> All Input Types</h3>
+            <span><?= count($items) ?> input types</span>
+        </div>
+        <div class="schema-section-content collapsed" id="<?= $sectionId ?>">
+            <?php foreach ($items as $name => $fields): ?>
+                <div class="schema-item" data-name="<?= $block->escapeHtmlAttr($name) ?>">
+                    <div class="schema-item-toggle"
+                         onclick="GraphQLDocs.toggleItem('input-type-<?= $block->escapeHtmlAttr($name) ?>')">
+                        <div class="toggle-header-content">
+                            <strong><?= $block->escapeHtml($name) ?></strong>
+                            <span class="input-type-badge">INPUT</span>
+                        </div>
+                        <span class="toggle-icon collapsed">👇</span>
+                    </div>
+
+                    <div class="schema-item-content collapsed" id="input-type-<?= $block->escapeHtmlAttr($name) ?>">
+                        <div class="input-type-fields">
+                            <h4>Input Fields:</h4>
+                            <?php foreach ($fields as $fieldName => $field): ?>
+                                <div class="input-field">
+                                    <div class="field-header">
+                                        <strong class="field-name"><?= $block->escapeHtml($fieldName) ?></strong>
+                                        <code class="field-type"><?= $block->escapeHtml($field['type'] ?? '') ?></code>
+                                        <?php if (!empty($field['is_required'])): ?>
+                                            <span class="required-badge">required</span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="field-description"><?= $block->escapeHtml($field['description'] ?? '') ?></div>
+                                    <?php if (isset($field['default_value'])): ?>
+                                        <div class="field-default">Default:
+                                            <code><?= $block->escapeHtml($field['default_value']) ?></code></div>
+                                    <?php endif; ?>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+
+                        <div class="input-type-example">
+                            <h4>Example Usage:</h4>
+                            <pre><code class="graphql"># Using <?= $block->escapeHtml($name) ?> in a mutation
+mutation {
+  someMutation(input: {
+    <?php foreach ($fields as $fieldName => $field): ?>
+        "<?= $block->escapeHtml($fieldName) ?>": <?= $block->escapeHtml($block->getExampleValue($field['type'] ?? '')) ?>,
+    <?php endforeach; ?>
+  }) {
+    # response
+  }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+<?php endif; ?>

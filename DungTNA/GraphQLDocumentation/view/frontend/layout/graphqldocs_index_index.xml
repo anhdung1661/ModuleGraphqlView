@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="empty"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title>GraphQL API Documentation</title>
+        <css src="DungTNA_GraphQLDocumentation::css/graphql-docs.css"/>
+    </head>
+    <body>
+        <referenceContainer name="header.container" remove="true"/>
+        <referenceContainer name="footer-container" remove="true"/>
+        <referenceContainer name="breadcrumbs" remove="true"/>
+        <referenceContainer name="page.top" remove="true"/>
+
+        <referenceContainer name="content">
+            <block class="DungTNA\GraphQLDocumentation\Block\GraphQLDocs" name="graphql.documentation"
+                   template="DungTNA_GraphQLDocumentation::graphql_docs.phtml" cacheable="false"/>
+        </referenceContainer>
+    </body>
+</page>

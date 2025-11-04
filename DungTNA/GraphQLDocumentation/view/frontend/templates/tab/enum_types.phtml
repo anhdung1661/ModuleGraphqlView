@@ -1,0 +1,66 @@
+<?php
+/** @var $this EnumTypes */
+
+use DungTNA\GraphQLDocumentation\Block\Tab\EnumTypes;
+
+$items = $this->getItems();
+$block = $this->getBlockHelper();
+$sectionId = 'enum-types-section';
+?>
+
+<?php if (empty($items)): ?>
+    <div class="no-data">No enum types found.</div>
+<?php else: ?>
+    <div class="schema-section">
+        <div class="schema-section-header" onclick="GraphQLDocs.toggleSection('<?= $sectionId ?>')">
+            <h3><span class="toggle-icon collapsed">👇</span> All Enum Types</h3>
+            <span><?= count($items) ?> enum types</span>
+        </div>
+        <div class="schema-section-content collapsed" id="<?= $sectionId ?>">
+            <?php foreach ($items as $name => $values): ?>
+                <div class="schema-item" data-name="<?= $block->escapeHtmlAttr($name) ?>">
+                    <div class="schema-item-toggle"
+                         onclick="GraphQLDocs.toggleItem('enum-type-<?= $block->escapeHtmlAttr($name) ?>')">
+                        <div class="toggle-header-content">
+                            <strong><?= $block->escapeHtml($name) ?></strong>
+                            <span class="enum-type-badge">ENUM</span>
+                        </div>
+                        <span class="toggle-icon collapsed">👇</span>
+                    </div>
+
+                    <div class="schema-item-content collapsed" id="enum-type-<?= $block->escapeHtmlAttr($name) ?>">
+                        <div class="enum-type-values">
+                            <h4>Values:</h4>
+                            <?php foreach ($values as $valueName => $value): ?>
+                                <div class="enum-value">
+                                    <div class="value-header">
+                                        <strong class="value-name"><?= $block->escapeHtml($valueName) ?></strong>
+                                        <?php if (!empty($value['is_deprecated'])): ?>
+                                            <span class="deprecated-badge">deprecated</span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="value-description"><?= $block->escapeHtml($value['description'] ?? '') ?></div>
+                                    <?php if (!empty($value['is_deprecated']) && !empty($value['deprecation_reason'])): ?>
+                                        <div class="deprecation-reason">
+                                            <strong>Reason:</strong> <?= $block->escapeHtml($value['deprecation_reason']) ?>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+
+                        <div class="enum-type-example">
+                            <h4>Example Usage:</h4>
+                            <pre><code class="graphql"># Using <?= $block->escapeHtml($name) ?>
+query {
+  someQuery(filter: { status: <?= $block->escapeHtml(array_key_first($values)) ?> }) {
+    # fields
+  }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+<?php endif; ?>

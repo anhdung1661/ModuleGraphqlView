@@ -1,0 +1,116 @@
+<?php /** @var GraphQLDocs $block */
+
+use DungTNA\GraphQLDocumentation\Block\GraphQLDocs;
+use DungTNA\GraphQLDocumentation\Block\Tab\Queries;
+
+?>
+<?php $schemaData = $block->getSchemaData(); ?>
+
+<div class="graphql-documentation" id="graphql-docs-container">
+    <div class="docs-header">
+        <h1>Magento 2 GraphQL API Documentation</h1>
+        <p class="docs-subtitle">Complete GraphQL schema reference for your Magento store</p>
+
+        <?php if ($block->hasSchemaErrors()): ?>
+            <div class="message error">
+                <strong>Error loading schema:</strong> <?= $block->escapeHtml($block->getSchemaError()) ?>
+                <div class="error-help">
+                    <p><strong>Troubleshooting steps:</strong></p>
+                    <ul>
+                        <li><strong>Check GraphQL endpoint:</strong> <a
+                                    href="<?= $block->escapeUrl($block->getGraphQLEndpointUrl()) ?>"
+                                    target="_blank"><?= $block->escapeHtml($block->getGraphQLEndpointUrl()) ?></a></li>
+                        <li><strong>Enable GraphQL module:</strong> <code>bin/magento module:enable
+                                Magento_GraphQl</code></li>
+                        <li><strong>Setup upgrade:</strong> <code>bin/magento setup:upgrade</code></li>
+                        <li><strong>Deploy static content:</strong> <code>bin/magento setup:static-content:deploy</code>
+                        </li>
+                        <li><strong>Clean cache:</strong> <code>bin/magento cache:clean</code></li>
+                    </ul>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+
+    <?php if (!$block->hasSchemaErrors()): ?>
+        <div class="stats-bar">
+            <?php foreach (['queries', 'mutations', 'types', 'input-types', 'enum-types'] as $tab): ?>
+                <div class="stat-item tab-button stats-tab-button <?= $tab === 'queries' ? 'active' : '' ?>"
+                     data-tab="<?= $tab ?>">
+                    <?php $tabSchema = str_replace('-', '_', $tab); ?>
+                    <span class="stat-number"><?= $schemaData["total_{$tabSchema}"] ?? 0 ?></span>
+                    <span class="stat-label"><?= ucfirst(str_replace('-', ' ', $tab)) ?></span>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <div class="search-section">
+            <input type="text" id="graphqlSearch" placeholder="Search queries, mutations, types..."
+                   class="input-text search-input"/>
+        </div>
+
+        <div class="tabs-container">
+            <div class="tabs">
+                <?php foreach (['queries', 'mutations', 'types', 'input-types', 'enum-types'] as $tab): ?>
+                    <button class="tab-button main-tab-button <?= $tab === 'queries' ? 'active' : '' ?>"
+                            data-tab="<?= $tab ?>">
+                        <?php $tabSchema = str_replace('-', '_', $tab); ?>
+                        <?= ucfirst(str_replace('-', ' ', $tab)) ?> (<?= $schemaData["total_{$tabSchema}"] ?? 0 ?>)
+                    </button>
+                <?php endforeach; ?>
+            </div>
+
+            <!-- Tab Contents -->
+            <div id="tab-contents">
+                <!-- Queries loaded initially -->
+                <div class="tab-content active" id="queries-tab">
+                    <?= $this->getLayout()->createBlock(Queries::class)
+                            ->setSchemaData($schemaData['queries'] ?? [])
+                            ->setBlock($block)
+                            ->toHtml() ?>
+                </div>
+
+                <!-- Others loaded via AJAX -->
+                <?php foreach (['mutations', 'types', 'input-types', 'enum-types'] as $tab): ?>
+                    <div class="tab-content" id="<?= $tab ?>-tab">
+                        <div class="loading-spinner">Loading <?= str_replace('-', ' ', $tab) ?>...</div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    <?php endif; ?>
+</div>
+
+<script>
+    // Global GraphQLDocs - must exist before any tab loads
+    window.GraphQLDocs = window.GraphQLDocs || {
+        toggleSection: function (id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.classList.toggle('collapsed');
+            const icon = el.previousElementSibling?.querySelector('.toggle-icon');
+            if (icon) icon.classList.toggle('collapsed');
+        },
+        toggleItem: function (id) {
+            this.toggleSection(id);
+        },
+        copyToClipboard: function (text, btn) {
+            navigator.clipboard.writeText(text).then(() => {
+                const orig = btn.textContent;
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = orig, 2000);
+            });
+        }
+    };
+</script>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "DungTNA_GraphQLDocumentation/js/graphql-docs": {
+                "ajaxUrl": "<?= $block->escapeUrl($block->getUrl('graphqldocs/ajax/loadtab')) ?>",
+            "initialTab": "queries"
+        }
+    }
+}
+</script>
