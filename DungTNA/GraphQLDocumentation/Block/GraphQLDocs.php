@@ -516,7 +516,7 @@ class GraphQLDocs extends Template
         $payloadJson = json_encode($payload, JSON_UNESCAPED_SLASHES);
 
         // Xây dựng curl command với headers
-        $curlCommand = "curl -X POST \\\n  '" . $graphqlUrl . "' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Accept: application/json'";
+        $curlCommand = "curl -X POST \\\n  '" . $graphqlUrl;
 
         // Thêm headers dựa trên queryName
         if (stripos($queryName, 'admin') !== false) {
